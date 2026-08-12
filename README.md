@@ -1,6 +1,6 @@
 #  Sistema Bancário Web (API REST)
 
-## 📖 Sobre o Projeto
+##  Sobre o Projeto
 Uma API RESTful desenvolvida em Java com Spring Boot para simular as operações essenciais de um sistema bancário. Este projeto foi construído com foco em boas práticas de Back-End, utilizando princípios de Orientação a Objetos e persistência de dados em um banco de dados relacional.
 
 ##  Tecnologias Utilizadas
