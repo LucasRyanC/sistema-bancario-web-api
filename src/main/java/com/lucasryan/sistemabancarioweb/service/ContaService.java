@@ -21,6 +21,11 @@ public class ContaService {
     }
 
     public Conta depositar(Long id, double valor) {
+        
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Erro: O valor do depósito deve ser maior que zero");
+        } 
+
         Conta conta = repository.findById(id).orElseThrow();
         conta.setSaldo(conta.getSaldo() + valor);
         return repository.save(conta);
