@@ -10,7 +10,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contas")
+@CrossOrigin(origins = "*")
     public class ContaController {
+        
         @Autowired
         private ContaService service;
         
