@@ -1,4 +1,4 @@
-# 🏦 Sistema Bancário Web API
+# Sistema Bancário Web API
 
 Uma API RESTful desenvolvida em Java com Spring Boot, focada em simular operações essenciais de um sistema bancário. O projeto foi construído seguindo rigorosamente as melhores práticas do mercado corporativo, incluindo Arquitetura em 3 Camadas e Tratamento Global de Exceções.
 
