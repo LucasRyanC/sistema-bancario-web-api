@@ -31,6 +31,12 @@ import java.util.List;
         public Conta depositar(@PathVariable Long id, @PathVariable double valor) {
             return service.depositar(id, valor);
         }
+        @PutMapping("/{id}/saque/{valor}")
+        public Conta sacar(@PathVariable Long id, @PathVariable double valor) {
+            return service.sacar(id, valor);
+        }
+
+
         //DELETE
         @DeleteMapping("/{id}")
         public void deletarConta(@PathVariable Long id) {
