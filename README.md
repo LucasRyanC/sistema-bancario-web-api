@@ -1,41 +1,62 @@
-# Sistema Bancário Web (API REST)
+# 🏦 Sistema Bancário Web API
 
-## Sobre o Projeto
+Uma API RESTful desenvolvida em Java com Spring Boot, focada em simular operações essenciais de um sistema bancário. O projeto foi construído seguindo rigorosamente as melhores práticas do mercado corporativo, incluindo Arquitetura em 3 Camadas e Tratamento Global de Exceções.
 
-Uma API RESTful desenvolvida em Java com Spring Boot para simular as operações essenciais de um sistema bancário. Este projeto foi construído com foco em boas práticas de Back-End, utilizando princípios de Orientação a Objetos e persistência de dados em um banco de dados relacional.
+---
 
 ## Tecnologias Utilizadas
 
-- **Java**
-- **Spring Boot** (Web, Data JPA)
-- **PostgreSQL** (Banco de Dados)
-- **Maven** (Gerenciamento de dependências)
+- **Linguagem:** Java (JDK 21)
+- **Framework:** Spring Boot 3
+- **Banco de Dados:** PostgreSQL
+- **Persistência:** Spring Data JPA / Hibernate
+- **Testes de API:** Postman
 
-## Funcionalidades (CRUD)
+---
 
-O sistema permite o gerenciamento completo do ciclo de vida de uma conta bancária:
+## Arquitetura e Padrões
 
-- `POST /contas` - Criação de uma nova conta.
-- `GET /contas` - Listagem de todas as contas ativas.
-- `PUT /contas/{id}/deposito/{valor}` - Operação de depósito (atualização de saldo).
-- `DELETE /contas/{id}` - Encerramento e exclusão de conta.
+O projeto foi estruturado seguindo o padrão de **Arquitetura em 3 Camadas** para garantir a separação de responsabilidades e facilitar a escala do código:
 
-## Como rodar o projeto localmente
+- **Controller:** Gerencia as requisições HTTP e roteamento.
+- **Service:** Centraliza as regras de negócio e validações (ex: bloqueio de depósitos negativos).
+- **Repository:** Responsável pela comunicação direta com o banco de dados PostgreSQL.
 
-1. Clone o repositório:
-   `git clone https://github.com/LucasRyanC/sistema-bancario-web-api.git`
+A API também conta com um **GlobalExceptionHandler** (`@RestControllerAdvice`), garantindo que erros internos do servidor (Stack Traces) não sejam expostos e que o cliente receba respostas HTTP limpas e padronizadas (como `400 Bad Request` e `404 Not Found`).
 
-2. Configure o seu banco de dados PostgreSQL local (crie um banco chamado `banco_lucas`).
-3. Atualize o arquivo `application.properties` com o seu usuário e senha do banco.
-4. Execute o projeto usando o Maven Wrapper:
-   `.\mvnw.cmd spring-boot:run`
+---
 
-A API estará disponível em `http://localhost:8080/contas`.
+## Como Executar o Projeto
 
-## Documentação e Testes (Swagger)
+1. Certifique-se de ter o **Java 21** e o **PostgreSQL** instalados na sua máquina local.
+2. Crie um banco de dados no PostgreSQL chamado `banco_lucas` (ou atualize as credenciais de acesso no arquivo `application.properties`).
+3. Clone este repositório.
+4. Abra o terminal na raiz do projeto e execute o comando do Maven:
 
-Este projeto possui a interface visual interativa do **Swagger (OpenAPI)** integrada.
-Para testar os métodos de criação, leitura, atualização e exclusão diretamente pelo navegador:
+   ```bash
+   .\mvnw.cmd spring-boot:run
 
-1. Certifique-se de que o servidor Spring Boot está rodando.
-2. Acesse o painel do Swagger na URL: `http://localhost:8080/swagger-ui.html`
+    O servidor iniciará localmente na porta 8080.
+   ```
+
+Como Testar a API
+
+Para interagir com a aplicação, utilize um API Client como Postman ou Insomnia realizando requisições para http://localhost:8080.
+
+Rotas Disponíveis:
+
+    POST /contas - Cria uma nova conta no banco de dados.
+
+    GET /contas - Lista todas as contas cadastradas.
+
+    PUT /contas/{id}/deposito/{valor} - Realiza um depósito (com validação de valor > 0).
+
+    DELETE /contas/{id} - Exclui uma conta existente.
+
+Exemplo de Corpo da Requisição (POST /contas):
+JSON
+
+{
+"titular": "Lucas Ryan",
+"saldo": 1500.0
+}
