@@ -45,4 +45,41 @@ public class ContaServiceTest {
 
         assertEquals(1500.0, contaAtualizada.getSaldo());
     }
+
+    @Test
+    public void deveLancarErroQuandoSaqueForNegativoOuZero() {
+        IllegalArgumentException erro = assertThrows(IllegalArgumentException.class, () -> {
+            service.sacar(1L, -100.0);
+        });
+
+        assertEquals("Erro: O valor do saque deve ser maior que zero.", erro.getMessage());
+    }
+    
+    @Test
+    public void deveLancarErroQuandoSaldoForInsuficiente() {
+        Conta contaPobre = new Conta();
+        contaPobre.setId(1L);
+        contaPobre.setSaldo(100.0);
+
+        when(repository.findById(1L)).thenReturn(Optional.of(contaPobre));
+
+        IllegalArgumentException erro = assertThrows(IllegalArgumentException.class, () -> {
+            service.sacar(1L, 500.0);
+        });
+
+        assertEquals("Erro: Saldo insuficiente para este saque.", erro.getMessage());
+    }
+
+    @Test
+    public void deveRealizarSaqueComSucesso() {
+        Conta contaRica = new Conta();
+        contaRica.setId(1L);
+        contaRica.setSaldo(1000.0);
+
+        when(repository.findById(1L)).thenReturn(Optional.of(contaRica));
+        when(repository.save(any(Conta.class))).thenReturn(contaRica);
+
+        Conta contaAtualizada = service.sacar(1L, 300.0);
+        assertEquals(700.0, contaAtualizada.getSaldo());
+    }
 }
